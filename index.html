@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>T-Bomb's Tens</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div>
+          <p class="eyebrow">Category Guessing Game</p>
+          <h1>T-Bomb's Tens</h1>
+          <p class="subtitle" id="categoryPrompt"></p>
+        </div>
+        <div class="stats">
+          <div>
+            <p class="stat-label">Found</p>
+            <p class="stat-value" id="foundCount">0/10</p>
+          </div>
+          <div>
+            <p class="stat-label">Guesses</p>
+            <p class="stat-value" id="guessCount">0</p>
+          </div>
+          <div>
+            <p class="stat-label">Lives</p>
+            <p class="stat-value" id="livesCount">5</p>
+          </div>
+        </div>
+      </header>
+
+      <section class="controls">
+        <form id="guessForm">
+          <input
+            id="guessInput"
+            type="text"
+            placeholder="Type a guess and press Enter"
+            autocomplete="off"
+            list="wordbankOptions"
+            aria-label="Your guess"
+          />
+          <datalist id="wordbankOptions"></datalist>
+          <button type="submit">Guess</button>
+        </form>
+        <div class="actions">
+          <button id="newCategoryBtn" type="button" class="ghost">New Category</button>
+          <button id="revealBtn" type="button" class="ghost">Reveal All</button>
+        </div>
+      </section>
+
+      <section class="feedback" id="feedback"></section>
+
+      <section class="content-grid">
+        <div class="list-section">
+          <ol class="guess-list" id="guessList"></ol>
+        </div>
+        <aside class="bank-section">
+          <div class="bank-header">
+            <div>
+              <p class="bank-title">Wordbank</p>
+              <p class="bank-subtitle">Pick from the list or type to filter.</p>
+            </div>
+            <p class="bank-count" id="wordbankCount"></p>
+          </div>
+          <ul class="bank-list" id="wordbankList"></ul>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <p>Make your best guesses. Exact matches only.</p>
+        <button id="adminOpenBtn" type="button" class="ghost">Admin</button>
+      </footer>
+    </div>
+
+    <div class="modal hidden" id="adminModal" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <header class="modal-header">
+          <div>
+            <p class="eyebrow">Admin Panel</p>
+            <h2>Update Category</h2>
+          </div>
+          <button id="adminCloseBtn" class="ghost" type="button">Close</button>
+        </header>
+
+        <section id="adminLoginView" class="admin-view">
+          <form id="adminLoginForm" class="admin-form">
+            <label>
+              Username
+              <input id="adminUsername" type="text" autocomplete="username" />
+            </label>
+            <label>
+              Password
+              <input id="adminPassword" type="password" autocomplete="current-password" />
+            </label>
+            <button type="submit">Log in</button>
+          </form>
+          <p class="admin-feedback" id="adminLoginFeedback"></p>
+        </section>
+
+        <section id="adminPanelView" class="admin-view hidden">
+          <p class="admin-current">Editing: <span id="adminCategoryLabel"></span></p>
+          <form id="adminUpdateForm" class="admin-form">
+            <label>
+              Question prompt
+              <input id="adminPromptInput" type="text" />
+            </label>
+            <label>
+              Stats label (shown next to correct answers)
+              <input id="adminSourceLabelInput" type="text" />
+            </label>
+            <label>
+              Wordbank (one per line)
+              <textarea id="adminWordbankInput" rows="8"></textarea>
+            </label>
+            <div class="admin-answers">
+              <div class="admin-answers-header">
+                <p>Correct answers (select 10)</p>
+                <span id="adminAnswerCount">0/10</span>
+              </div>
+              <div class="admin-answers-tools">
+                <label>
+                  Filter answers
+                  <input id="adminAnswerFilter" type="text" placeholder="Type to filter wordbank entries" />
+                </label>
+                <label class="admin-inline-toggle">
+                  <input id="adminShowSelectedOnly" type="checkbox" />
+                  Show selected only
+                </label>
+                <div class="admin-answers-actions">
+                  <button type="button" id="adminSelectVisible" class="ghost">Select visible</button>
+                  <button type="button" id="adminClearVisible" class="ghost">Clear visible</button>
+                  <button type="button" id="adminAutoFillRanks" class="ghost">Auto-fill ranks</button>
+                </div>
+              </div>
+              <p class="admin-answers-note">Assign a rank (1 = highest) and a stat value.</p>
+              <p class="admin-answers-status" id="adminAnswerStatus"></p>
+              <ul id="adminAnswerList" class="admin-answer-list"></ul>
+            </div>
+            <button type="button" id="adminClearSelections" class="ghost">Clear selections</button>
+            <button type="button" id="adminResetGame" class="ghost">Reset game</button>
+            <button type="submit">Update category</button>
+          </form>
+          <p class="admin-feedback" id="adminUpdateFeedback"></p>
+        </section>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="resultsModal" role="dialog" aria-modal="true">
+      <div class="modal-content results-modal">
+        <header class="modal-header">
+          <div>
+            <p class="eyebrow">Game Over</p>
+            <h2>Final Results</h2>
+          </div>
+          <button id="resultsCloseBtn" class="ghost" type="button">Close</button>
+        </header>
+        <div class="results-summary">
+          <p id="resultsHeadline"></p>
+          <p id="resultsDetails"></p>
+        </div>
+        <ol class="results-list" id="resultsList"></ol>
+        <button id="shareResultsBtn" type="button">Share results</button>
+        <p class="admin-feedback" id="shareFeedback"></p>
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

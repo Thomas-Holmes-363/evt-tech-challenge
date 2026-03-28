@@ -1,0 +1,15 @@
+# Mac / OS junk
+.DS_Store
+Thumbs.db
+
+# Local K8s stuff
+.kube/
+kind-*.log
+
+# Certs (we'll generate these locally, never commit real keys)
+*.crt
+*.key
+tls.*
+
+# Node / build junk
+node_modules/
